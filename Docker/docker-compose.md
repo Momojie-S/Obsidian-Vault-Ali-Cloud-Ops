@@ -38,12 +38,16 @@ services:
       - dev-network
 
   clash:
-    image: dreamacro/clash
+    image: metacubex/mihomo:latest
     container_name: clash
     network_mode: "host"  # 共享主机网络栈
     restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun  # TUN 模式支持
     volumes:
-      - ./clash-conf/config.yml:/root/.config/clash/config.yaml:ro
+      - ./clash-conf/config.yml:/root/.config/mihomo/config.yaml:ro
 
 networks:
   dev-network:
